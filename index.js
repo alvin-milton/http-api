@@ -21,6 +21,9 @@ var server = http.createServer(function(req, res) {
   // get the http method
   var method = req.method.toLowerCase();
 
+  // get the headers as an obj
+  var headers = req.headers;
+
   //   send response
   res.end("hello world\n");
 
@@ -33,6 +36,7 @@ var server = http.createServer(function(req, res) {
       " and with these query string params:",
     queryStringObject
   );
+  console.log("request recieved with these headers", headers);
 });
 
 // start the server and listen on 3000
