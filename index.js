@@ -40,7 +40,7 @@ var server = http.createServer(function(req, res) {
     // if none found, use notFound
     var chosenHandler =
       typeof router[trimmedPath] !== "undefined"
-        ? router.trimmedPath
+        ? router[trimmedPath]
         : handlers.notFound;
 
     // construct data obj to send to handler
@@ -49,7 +49,7 @@ var server = http.createServer(function(req, res) {
       queryStringObject: queryStringObject,
       method: method,
       headers: headers,
-      payload: payload
+      payload: buffer
     };
 
     // rout the rewquset to handler specified in the router
