@@ -28,4 +28,4 @@ var envToExport =
     : environments.staging;
 
 // export the module
-module.exports = environments.envToExport;
+module.exports = envToExport;
