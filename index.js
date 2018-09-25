@@ -134,7 +134,12 @@ handlers.notFound = function(data, callback) {
 handlers.ping = function(data, callback) {
   callback(200);
 };
+
+handlers.hello = function(data, callback) {
+  callback(200, { message: "welcome" });
+};
 // define a request router
 var router = {
-  ping: handlers.ping
+  ping: handlers.ping,
+  hello: handlers.hello
 };
