@@ -87,9 +87,14 @@ var server = http.createServer(function(req, res) {
   });
 });
 
-// start the server and listen on 3000
-server.listen(5000, function() {
-  console.log("The server is listening on port 5000 now.");
+// start the server
+server.listen(config.port, function() {
+  console.log(
+    "The server is listening on port " +
+      config.port +
+      " now. Enviroment: " +
+      config.envName
+  );
 });
 
 // define handlers
