@@ -36,20 +36,52 @@ var server = http.createServer(function(req, res) {
   req.on("end", function() {
     buffer += decoder.end();
 
-    // send response
-    res.end("hello world\n");
+    // choose handler that request should go to
+    // if none found, use notFound
+    var chosenHandler =
+      typeof router[trimmedPath] !== "undefined"
+        ? router.trimmedPath
+        : handlers.notFound;
 
-    // log the request
-    console.log(
-      "Request recieved on path: " +
-        trimmedPath +
-        " with method " +
-        method +
-        " and with these query string params:",
-      queryStringObject
-    );
-    console.log("request recieved with these headers: ", headers);
-    console.log("request recieved with this payload: ", buffer);
+    // construct data obj to send to handler
+    var data = {
+      trimmedPath: trimmedPath,
+      queryStringObject: queryStringObject,
+      method: method,
+      headers: headers,
+      payload: payload
+    };
+
+    // rout the rewquset to handler specified in the router
+    chosenHandler(data, function(statusCode, payload) {
+      // use the status code called back by the handler
+      // or default to 200
+      statusCode = typeof statusCode == "number" ? statusCode : 200;
+
+      // use the payload called back by the handler
+      // or default to empty obj
+      payload = typeof payload == "object" ? payload : {};
+
+      // convert the payload to a string
+      var payloadString = JSON.stringify(payload);
+
+      // return response
+      res.writeHead(statusCode);
+      res.end(payloadString);
+
+      // log the request
+      console.log(
+        "Request recieved on path: " +
+          trimmedPath +
+          " with method " +
+          method +
+          " and with these query string params:",
+        queryStringObject
+      );
+      console.log("request recieved with these headers: ", headers);
+      console.log("request recieved with this payload: ", buffer);
+      console.log("returning this response: ", statusCode, payloadString);
+    });
   });
 });
 
