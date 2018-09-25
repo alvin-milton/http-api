@@ -5,13 +5,15 @@ var environments = {};
 
 // staging obj
 environments.staging = {
-  port: 5000,
+  httpPort: 5000,
+  httpsPort: 5001,
   envName: "staging"
 };
 
 // production obj
 environments.production = {
-  port: 6000,
+  httpPort: 6000,
+  httpsPort: 6001,
   envName: "production"
 };
 
