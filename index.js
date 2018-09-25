@@ -5,6 +5,7 @@ Primary file for API
 // dependencies
 var http = require("http");
 var url = require("url");
+var StringDecoder = require("string_decoder").StringDecoder;
 
 // the server should respond to all requests with a string
 var server = http.createServer(function(req, res) {
@@ -24,19 +25,32 @@ var server = http.createServer(function(req, res) {
   // get the headers as an obj
   var headers = req.headers;
 
-  //   send response
-  res.end("hello world\n");
+  // get the payload, if any
+  var decoder = new StringDecoder("utf-8");
+  var buffer = "";
 
-  //   log the request
-  console.log(
-    "Request recieved on path: " +
-      trimmedPath +
-      " with method " +
-      method +
-      " and with these query string params:",
-    queryStringObject
-  );
-  console.log("request recieved with these headers", headers);
+  req.on("data", function(data) {
+    buffer += decoder.write(data);
+  });
+
+  req.on("end", function() {
+    buffer += decoder.end();
+
+    // send response
+    res.end("hello world\n");
+
+    // log the request
+    console.log(
+      "Request recieved on path: " +
+        trimmedPath +
+        " with method " +
+        method +
+        " and with these query string params:",
+      queryStringObject
+    );
+    console.log("request recieved with these headers: ", headers);
+    console.log("request recieved with this payload: ", buffer);
+  });
 });
 
 // start the server and listen on 3000
