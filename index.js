@@ -57,3 +57,18 @@ var server = http.createServer(function(req, res) {
 server.listen(5000, function() {
   console.log("The server is listening on port 5000 now.");
 });
+
+// define handlers
+var handlers = {};
+
+handlers.sample = function(data, callback) {
+  // callback a http status code, and a payload object
+  callback(406, { name: "sample handler" });
+};
+handlers.notFound = function(data, callback) {
+  callback(404);
+};
+// define a request router
+var router = {
+  sample: handlers.sample
+};
