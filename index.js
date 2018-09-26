@@ -9,7 +9,6 @@ var url = require("url");
 var StringDecoder = require("string_decoder").StringDecoder;
 var config = require("./config");
 var fs = require("fs");
-var _data = require("./lib/data");
 var handlers = require("./lib/handlers");
 
 // Instantiating the HTTP server
@@ -129,5 +128,6 @@ var unifiedServer = function(req, res) {
 // define a request router
 var router = {
   ping: handlers.ping,
+  users: handlers.users,
   hello: handlers.hello
 };
