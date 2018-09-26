@@ -22,6 +22,9 @@ _data.read("test", "newFile", function(err, data) {
 _data.read("test", "newFile1", function(err, data) {
   console.log("this was the error:", err, "and this was the data:", data);
 });
+_data.update("test", "newFile", { fizz: "buzz" }, function(err) {
+  console.log("this was the error:", err);
+});
 
 // Instantiating the HTTP server
 var httpServer = http.createServer(function(req, res) {
