@@ -7,14 +7,16 @@ var environments = {};
 environments.staging = {
   httpPort: 5000,
   httpsPort: 5001,
-  envName: "staging"
+  envName: "staging",
+  hashingSecret: "1234"
 };
 
 // production obj
 environments.production = {
   httpPort: 6000,
   httpsPort: 6001,
-  envName: "production"
+  envName: "production",
+  hashingSecret: "12345"
 };
 
 // determine which environment was posted as a command line arg
