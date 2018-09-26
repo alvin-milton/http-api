@@ -25,6 +25,9 @@ _data.read("test", "newFile1", function(err, data) {
 _data.update("test", "newFile", { fizz: "buzz" }, function(err) {
   console.log("this was the error:", err);
 });
+_data.delete("test", "newFile", function(err) {
+  console.log("this was the error:", err);
+});
 
 // Instantiating the HTTP server
 var httpServer = http.createServer(function(req, res) {
