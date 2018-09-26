@@ -21,6 +21,9 @@ This is what it does:
 
 either use:
 `NODE_ENV=staging node index.js`
+
+or
+
 `NODE_ENV=production node index.js`
 
 Both an HTTP & HTTPS server will run regardless of environment.
