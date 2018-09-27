@@ -111,17 +111,17 @@ var unifiedServer = function(req, res) {
       res.end(payloadString);
 
       // log the request
-      console.log(
-        "Request recieved on path: " +
-          trimmedPath +
-          " with method " +
-          method +
-          " and with these query string params:",
-        queryStringObject
-      );
-      console.log("request recieved with these headers: ", headers);
-      console.log("request recieved with this payload: ", buffer);
-      console.log("returning this response: ", statusCode, payloadString);
+      // console.log(
+      //   "Request recieved on path: " +
+      //     trimmedPath +
+      //     " with method " +
+      //     method +
+      //     " and with these query string params:",
+      //   queryStringObject
+      // );
+      // console.log("request recieved with these headers: ", headers);
+      // console.log("request recieved with this payload: ", buffer);
+      // console.log("returning this response: ", statusCode, payloadString);
     });
   });
 };
