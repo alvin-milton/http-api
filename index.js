@@ -12,17 +12,17 @@ var fs = require("fs");
 var _data = require("./lib/data");
 
 // Instantiating the HTTP server
-var httpServer = http.createServer(function(req, res) {
+var httpServer = http.createServer(function (req, res) {
   unifiedServer(req, res);
 });
 
 // Starting the server
-httpServer.listen(config.httpPort, function() {
+httpServer.listen(config.httpPort, function () {
   console.log(
     "The server is listening on port " +
-      config.httpPort +
-      " now. Enviroment: " +
-      config.envName
+    config.httpPort +
+    " now. Enviroment: " +
+    config.envName
   );
 });
 
@@ -32,22 +32,22 @@ var httpsServerOptions = {
   cert: fs.readFileSync("./https/cert.pem")
 };
 
-var httpsServer = https.createServer(httpsServerOptions, function(req, res) {
+var httpsServer = https.createServer(httpsServerOptions, function (req, res) {
   unifiedServer(req, res);
 });
 
 // Starting the HTTPS server
-httpsServer.listen(config.httpsPort, function() {
+httpsServer.listen(config.httpsPort, function () {
   console.log(
     "The server is listening on port " +
-      config.httpsPort +
-      " now. Enviroment: " +
-      config.envName
+    config.httpsPort +
+    " now. Enviroment: " +
+    config.envName
   );
 });
 
 // All the server logic for both HTTP & HTTPS
-var unifiedServer = function(req, res) {
+var unifiedServer = function (req, res) {
   //   get url and parse it
   var parsedUrl = url.parse(req.url, true);
 
@@ -68,11 +68,11 @@ var unifiedServer = function(req, res) {
   var decoder = new StringDecoder("utf-8");
   var buffer = "";
 
-  req.on("data", function(data) {
+  req.on("data", function (data) {
     buffer += decoder.write(data);
   });
 
-  req.on("end", function() {
+  req.on("end", function () {
     buffer += decoder.end();
 
     // choose handler that request should go to
@@ -92,7 +92,7 @@ var unifiedServer = function(req, res) {
     };
 
     // rout the rewquset to handler specified in the router
-    chosenHandler(data, function(statusCode, payload) {
+    chosenHandler(data, function (statusCode, payload) {
       // use the status code called back by the handler
       // or default to 200
       statusCode = typeof statusCode == "number" ? statusCode : 200;
@@ -112,10 +112,10 @@ var unifiedServer = function(req, res) {
       // log the request
       console.log(
         "Request recieved on path: " +
-          trimmedPath +
-          " with method " +
-          method +
-          " and with these query string params:",
+        trimmedPath +
+        " with method " +
+        method +
+        " and with these query string params:",
         queryStringObject
       );
       console.log("request recieved with these headers: ", headers);
@@ -128,17 +128,27 @@ var unifiedServer = function(req, res) {
 // define handlers
 var handlers = {};
 
-handlers.notFound = function(data, callback) {
+handlers.notFound = function (data, callback) {
   callback(404);
 };
 
-handlers.ping = function(data, callback) {
+handlers.ping = function (data, callback) {
   callback(200);
 };
 
-handlers.hello = function(data, callback) {
+handlers.hello = function (data, callback) {
   callback(200, { message: "welcome" });
 };
+
+handlers.podcast = function (data, callback) {
+  const payload = {
+    "podcast": {
+      "title": "test"
+    }
+  };
+  callback(200, payload)
+}
+
 // define a request router
 var router = {
   ping: handlers.ping,
