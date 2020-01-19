@@ -1,4 +1,5 @@
 // create and export config vars
+require('dotenv').config()
 
 // container for all environments
 var environments = {};
@@ -7,14 +8,22 @@ var environments = {};
 environments.staging = {
   httpPort: 5000,
   httpsPort: 5001,
-  envName: "staging"
+  envName: "staging",
+  mongo: {
+    user: process.env.MONGOUSER,
+    pass: process.env.MONGOUSERPW
+  }
 };
 
 // production obj
 environments.production = {
   httpPort: 6000,
   httpsPort: 6001,
-  envName: "production"
+  envName: "production",
+  mongo: {
+    user: '',
+    pass: ''
+  }
 };
 
 // determine which environment was posted as a command line arg
