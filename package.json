@@ -1,0 +1,27 @@
+{
+  "name": "http-api",
+  "version": "1.0.0",
+  "description": "NODEJS",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "mongoose": "^5.8.9",
+    "podcast": "^1.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alvin-milton/http-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alvin-milton/http-api/issues"
+  },
+  "homepage": "https://github.com/alvin-milton/http-api#readme"
+}
