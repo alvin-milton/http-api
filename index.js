@@ -3,16 +3,24 @@ Primary file for API
 */
 
 // dependencies
-var http = require("http");
-var https = require("https");
-var url = require("url");
-var StringDecoder = require("string_decoder").StringDecoder;
-var config = require("./config");
-var fs = require("fs");
-var _data = require("./lib/data");
+const http = require("http");
+const https = require("https");
+const url = require("url");
+const StringDecoder = require("string_decoder").StringDecoder;
+const config = require("./config");
+const fs = require("fs");
+const _podcast = require("./lib/podcast");
+const mongoose = require('mongoose');
+
+
+mongoose.connect(`mongodb+srv://${config.mongo.user}:${config.mongo.password}@cluster0-hjy6a.mongodb.net/test?retryWrites=true&w=majority`, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
 
 // Instantiating the HTTP server
-var httpServer = http.createServer(function (req, res) {
+const httpServer = http.createServer(function (req, res) {
   unifiedServer(req, res);
 });
 
@@ -140,17 +148,19 @@ handlers.hello = function (data, callback) {
   callback(200, { message: "welcome" });
 };
 
-handlers.podcast = function (data, callback) {
-  const payload = {
-    "podcast": {
-      "title": "test"
-    }
-  };
-  callback(200, payload)
-}
+handlers.getPodcast = function (data, callback) {
+  const feed = _podcast.readPodcast()
+  console.log(feed)
+  callback(200, feed);
+};
+
+handlers.setPodcast = function (data, callback) {
+  // call to mongo to save data
+};
 
 // define a request router
 var router = {
   ping: handlers.ping,
-  hello: handlers.hello
+  hello: handlers.hello,
+  podcast: handlers.getPodcast
 };
